@@ -4,8 +4,21 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    memcached.services:
+        - memcached:11211
+    memcached.config: {distribution: 'consistent', compression: true}
+
 
 services:
+    memcached.doctrine:
+        class: Mamcached
+        factory: Symfony\Component\Cache\Adapter\MemcachedAdapter::createConnection
+        arguments: ['%memcached.servers%', '%memcached.config%']
+        doctrine.cache.memcached:
+            class: Doctrine\Common\Cache\MemcachedCache
+            calls:
+                - [ setMemcached, [ '@memcached.doctrine' ] ]
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
