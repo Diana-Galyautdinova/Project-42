@@ -11,7 +11,7 @@ parameters:
 
 services:
     memcached.doctrine:
-        class: Mamcached
+        class: Memcached
         factory: Symfony\Component\Cache\Adapter\MemcachedAdapter::createConnection
         arguments: ['%memcached.servers%', '%memcached.config%']
     doctrine.cache.memcached:

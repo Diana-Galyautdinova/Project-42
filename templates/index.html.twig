@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Гостевая Книга</h1>
+    <form action="/guest/book/save">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ваш отзыв:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="text"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+    <br>
+    <ul class="list-group list-group-flush">
+        {% for comment in comments %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ comment.text }}
+                <span class="badge badge-primary badge-pill">{{ comment.time | date }}</span>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
