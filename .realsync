@@ -39,6 +39,7 @@ exclude = *.swp
 exclude = .DS_Store
 exclude = .docker
 exclude = node_modules
+exclude = var
 
 # You may read exclusion list from e.g. a .gitignore file.
 #exclude_file = .gitignore

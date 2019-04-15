@@ -24,15 +24,31 @@ class GuestBookController extends AbstractController
     }
 
     /**
-     * @Route("/guest/book")
+     * @Route("/guest/book/{page}", name="page", requirements={"page"="\d+"})
      */
-    public function index()
+    public function list($page)
     {
-        return $this->render(
-            'index.html.twig', [
-                'comments' => $this->memcached->get($this->key),
-            ]
-        );
+        if ($page == 1) {
+            return $this->render(
+                'index1.html.twig', [
+                    'comments' => $this->memcached->get($this->key),
+                ]
+            );
+        }
+        else if ($page == 2) {
+            return $this->render(
+                'index2.html.twig', [
+                    'comments' => $this->memcached->get($this->key),
+                ]
+            );
+        }
+        else if ($page == 3) {
+            return $this->render(
+                'index3.html.twig', [
+                    'comments' => $this->memcached->get($this->key),
+                ]
+            );
+        }
     }
 
     /**
@@ -41,13 +57,15 @@ class GuestBookController extends AbstractController
     public function save(Request $request)
     {
         /** @var array[] $comments */
-        $comments = $this->memcached->get($this->key);
-        $comments[] = [
-            'text' => $request->query->get('text'),
-            'time' => time(),
-        ];
+        if ($request->query->get('text')) {
+            $comments = $this->memcached->get($this->key);
+            $comments[] = [
+                'text' => $request->query->get('text'),
+                'time' => time(),
+            ];
 
-        $this->memcached->set($this->key, $comments);
+            $this->memcached->set($this->key, $comments);
+        }
 
         return $this->redirect('/guest/book');
     }
