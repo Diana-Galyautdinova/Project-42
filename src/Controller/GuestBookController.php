@@ -28,27 +28,13 @@ class GuestBookController extends AbstractController
      */
     public function list($page)
     {
-        if ($page == 1) {
-            return $this->render(
-                'index1.html.twig', [
-                    'comments' => $this->memcached->get($this->key),
-                ]
-            );
-        }
-        else if ($page == 2) {
-            return $this->render(
-                'index2.html.twig', [
-                    'comments' => $this->memcached->get($this->key),
-                ]
-            );
-        }
-        else if ($page == 3) {
-            return $this->render(
-                'index3.html.twig', [
-                    'comments' => $this->memcached->get($this->key),
-                ]
-            );
-        }
+        $template = ($page > 0 && $page <= 3) ? 'index' . $page . '.html.twig' : 'index1.html.twig';
+        return $this->render(
+            $template, [
+                'comments' => $this->memcached->get($this->key),
+                'page' => $page,
+            ]
+        );
     }
 
     /**
@@ -56,8 +42,8 @@ class GuestBookController extends AbstractController
      */
     public function save(Request $request)
     {
-        /** @var array[] $comments */
         if ($request->query->get('text')) {
+            /** @var array[] $comments */
             $comments = $this->memcached->get($this->key);
             $comments[] = [
                 'text' => $request->query->get('text'),
@@ -67,7 +53,7 @@ class GuestBookController extends AbstractController
             $this->memcached->set($this->key, $comments);
         }
 
-        return $this->redirect('/guest/book');
+        return $this->redirect('/guest/book/'.$request->query->get('page'));
     }
 
 }
