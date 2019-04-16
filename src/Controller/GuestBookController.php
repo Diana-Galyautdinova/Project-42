@@ -28,9 +28,9 @@ class GuestBookController extends AbstractController
      */
     public function list($page)
     {
-        $template = ($page > 0 && $page <= 3) ? 'index' . $page . '.html.twig' : 'index1.html.twig';
+        $page = ($page > 0 && $page <= 3) ? $page : 1;
         return $this->render(
-            $template, [
+            'index' . $page . '.html.twig', [
                 'comments' => $this->memcached->get($this->key),
                 'page' => $page,
             ]
