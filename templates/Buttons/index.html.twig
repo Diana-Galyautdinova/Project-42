@@ -1,0 +1,14 @@
+{% extends 'Buttons/home.html.twig' %}
+
+{% block body %}
+    <ul>
+        <li><a href="{{ path('ajax42') }}" class="test_tag_link" name="one">Нажми раз</a></li>
+        <li><a href="{{ path('ajax42') }}" class="test_tag_link" name="two">Нажми два</a></li>
+        <li><a href="{{ path('ajax42') }}" class="test_tag_link" name="three">Нажми три</a></li>
+    </ul>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/log.js') }}"></script>
+{% endblock %}
