@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <form action="/" method="post">
+        <br>
+        <select class="form-control" id="exampleFormControlSelect1" name="from-format">
+            {% for format in formats %}
+                <option value="{{ format }}" {{ format == from_format ? 'selected' : '' }} >
+                    {{ format }}
+                </option>
+            {% endfor %}
+        </select>
+        </br>
+        <br>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="from-text">{{ from_text }}</textarea>
+        </br>
+        <br>
+        <select class="form-control" id="exampleFormControlSelect1" name="to-format">
+            {% for format in formats %}
+                <option value="{{ format }}" {{ format == to_format ? 'selected' : '' }} >
+                    {{ format }}
+                </option>
+            {% endfor %}
+        </select>
+        </br>
+        <br>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="to-text">{{ to_text }}</textarea>
+        </br>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+{% endblock %}
